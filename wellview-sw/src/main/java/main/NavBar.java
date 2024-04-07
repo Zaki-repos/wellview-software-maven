@@ -100,6 +100,15 @@ public class NavBar extends UI{
             	border.setCenter(newPat.showPane());
             }
         });
+		
+		prescribe_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Prescription newPres = new Prescription(border);
+		    	border.setCenter(newPres.showPane());
+            }
+        });
+
 	}
 	
 }
