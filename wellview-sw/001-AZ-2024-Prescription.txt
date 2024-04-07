@@ -1,0 +1,43 @@
+--------------------------------------------
+       HEART DISEASE TREATMENT PLAN
+--------------------------------------------
+Prescription for Patient ID: 001-AZ-2024
+
+Medications:
+
+1. Medication: Aspirin Low Dose
+   Dosage: 81 mg
+   Instructions: Take one tablet orally once a day with water. Do not crush or chew.
+
+2. Medication: Lisinopril
+   Dosage: 10 mg
+   Instructions: Take one tablet by mouth once daily. May be taken with or without food.
+
+3. Medication: Metoprolol Tartrate
+   Dosage: 50 mg
+   Instructions: Take one tablet orally twice a day. Swallow whole with water.
+
+4. Medication: Atorvastatin
+   Dosage: 20 mg
+   Instructions: Take one tablet by mouth once a day in the evening.
+
+5. Medication: Nitroglycerin (as needed)
+   Dosage: 0.4 mg spray
+   Instructions: Spray under the tongue at the onset of chest pain. Do not exceed 3 sprays in 15 minutes.
+
+6. Medication: Furosemide
+   Dosage: 40 mg
+   Instructions: Take one tablet by mouth once a day in the morning with food.
+
+7. Medication: Warfarin
+   Dosage: Dosage adjusted per INR results
+   Instructions: Take as directed by the anticoagulation clinic. INR tests required regularly.
+
+8. Medication: Clopidogrel
+   Dosage: 75 mg
+   Instructions: Take one tablet by mouth once daily with or without food.
+
+Note: Please consult your healthcare provider for a detailed treatment plan and before starting any new medication. Follow-up appointments are crucial to monitor progress and make necessary adjustments to your treatment.
+
+Physician's Signature: _______________________
+Date: _______________

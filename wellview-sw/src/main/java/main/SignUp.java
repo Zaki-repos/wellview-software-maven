@@ -67,7 +67,7 @@ public class SignUp extends UI{
 	/*
 	 * SignUp Constructor: Formats all the UI
 	 */
-	public SignUp(BorderPane border, Pane root) {
+	public SignUp(BorderPane border) {
 		
 		setupLabelUI(title_label, "Ariel", 20, WellViewMain.WINDOW_WIDTH, Pos.CENTER, 0, 10);
 		setupLabelUI(createAccount_label, "Ariel", 18, WellViewMain.WINDOW_WIDTH, Pos.CENTER, 0, 40);
@@ -75,11 +75,9 @@ public class SignUp extends UI{
 		
 		back_btn.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override
-            public void handle(ActionEvent event) {    
-            	hidePane();
-            	root.getChildren().clear();
-            	Login newLogin = new Login(border, root);
-            	root.getChildren().add(newLogin.showPane());
+            public void handle(ActionEvent event) { 
+            	Login newLogin = new Login(border);
+            	border.setCenter(newLogin.showPane());
             }
         });
 		
@@ -133,10 +131,8 @@ public class SignUp extends UI{
                 	User newUser = new User(fn, ln, pw, bd, email, sx);
                 	
                 	WellViewMain.userList.add(newUser);
-                	hidePane();
-                	root.getChildren().clear();
-                	Login newLogin = new Login(border, root);
-                	root.getChildren().add(newLogin.showPane());
+                	Login newLogin = new Login(border);
+                	border.setCenter(newLogin.showPane());
             	}
             	else
             	{

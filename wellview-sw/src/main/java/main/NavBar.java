@@ -1,36 +1,38 @@
 package main;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.TextFlow;
 
 public class NavBar extends UI{
-	
-	private MenuBar menu = new MenuBar();
 	
 	private TextFlow title = new TextFlow();
 	private Label title_label = new Label("WellView");
 	private ImageView logoView;
 	
-	private Menu home_menu = new Menu("Home");
-	private Menu patientList_menu = new Menu("Patient List");
-	private Menu visits_menu = new Menu("Visits");
-	private Menu chat_menu = new Menu("Chat");
-	private Menu prescribe_menu = new Menu("Prescribe");
-	private Menu summary_menu = new Menu("Add Summary");
-	private Menu vitals_menu = new Menu("Vitals");
-	private Menu documents_menu = new Menu("Documents");
-	private Menu help_menu = new Menu("Help");
-	private Menu profile_menu = new Menu("Profile");
+	private Button home_menu = new Button("Home");
+	private Button patientList_menu = new Button("Patient List");
+	private Button visits_menu = new Button("Visits");
+	private Button chat_menu = new Button("Chat");
+	private Button prescribe_menu = new Button("Prescribe");
+	private Button vitals_menu = new Button("Vitals");
+	private Button documents_menu = new Button("Documents");
+	private Button help_menu = new Button("Help");
+	private Button profile_menu = new Button("Profile");
+	
+	private ToolBar toolbar = new ToolBar();
 	
 	AnchorPane ap = new AnchorPane();
 	
-	public NavBar() {
+	public NavBar(BorderPane border) {
 		
 		Image image = new Image(Login.class.getResourceAsStream("../images/wellview_logo.png"));
 		logoView = new ImageView(image);
@@ -38,29 +40,33 @@ public class NavBar extends UI{
 		setupImage(logoView, 0, 0, 25, 25);
 		setupLabelUI(title_label, "Ariel", 25, 0, Pos.CENTER_LEFT, 0, 0);
 		title.getChildren().addAll(logoView, title_label);
-		menu.setStyle("-fx-pref-height: 20px; -fx-font-size: 16px;");
+		
+		toolbar.setStyle("-fx-pref-height: 20px; -fx-font-size: 16px;");
 
+		setActionsOnButtons(border);
+		
 		if (WellViewMain.currentUserType.equals("Patient")) {
-			menu.getMenus().addAll(home_menu, visits_menu, chat_menu
+			
+			toolbar.getItems().addAll(home_menu, visits_menu, chat_menu
 					, documents_menu, help_menu, profile_menu);
 		}
 		else if (WellViewMain.currentUserType.equals("Doctor")) {
-			menu.getMenus().addAll(home_menu, patientList_menu, chat_menu, prescribe_menu, summary_menu
+			toolbar.getItems().addAll(home_menu, patientList_menu, chat_menu, prescribe_menu
 					, documents_menu, help_menu, profile_menu);
 		}
 		else if (WellViewMain.currentUserType.equals("Nurse")) {
 			
-			menu.getMenus().addAll(home_menu, patientList_menu, chat_menu
+			toolbar.getItems().addAll(home_menu, patientList_menu, chat_menu
 					, vitals_menu, documents_menu, help_menu, profile_menu);
 			
 		} else {
-			menu.getMenus().addAll(home_menu, patientList_menu, visits_menu, chat_menu, prescribe_menu
+			toolbar.getItems().addAll(home_menu, patientList_menu, visits_menu, chat_menu, prescribe_menu
 					, vitals_menu, documents_menu, help_menu, profile_menu);
 		}
 		
 		
 		
-		AnchorPane.setRightAnchor(menu, 0.0);
+		AnchorPane.setRightAnchor(toolbar, 0.0);
 		ap.setStyle(
 				"-fx-padding: 0.0em 0.666667em 0.0em 0.666667em;"
 				+ " -fx-background-color: linear-gradient(to bottom, derive(-fx-base,75%) 0%, "
@@ -72,47 +78,28 @@ public class NavBar extends UI{
 	/*
 	 * showPane: adds all the UI components to a pane and returns that pane.
 	 */ 
-	public MenuBar getNavBar() {
-		return menu;
-	}
-	
 	public AnchorPane showPane() {
-		ap.getChildren().addAll(menu, title);
+		ap.getChildren().addAll(toolbar, title);
 		return ap;
 	}
 	
-	public void disableMenu() {
+	private void setActionsOnButtons(BorderPane border) {
 		
-		switch(WellViewMain.currentPage) {
-		case "Home": 
-			home_menu.setDisable(true);
-			break;
-		case "Patient_List":
-			patientList_menu.setDisable(true);
-			break;
-		case "Visits":
-			visits_menu.setDisable(true);
-			break;
-		case "Chat":
-			chat_menu.setDisable(true);
-			break;
-		case "Prescribe":
-			prescribe_menu.setDisable(true);
-			break;
-		case "Add_Vitals":
-			vitals_menu.setDisable(true);
-			break;
-		case "Documents":
-			documents_menu.setDisable(true);
-			break;
-		case "Help":
-			help_menu.setDisable(true);
-			break;
-		case "Profile":
-			profile_menu.setDisable(true);
-			break;
-		default:
-			break;
-		}
+		home_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {     
+            	Home newHome = new Home(border);
+            	border.setCenter(newHome.showPane());
+            }
+        });
+		
+		patientList_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+            	Patients newPat = new Patients(border);
+            	border.setCenter(newPat.showPane());
+            }
+        });
 	}
+	
 }
