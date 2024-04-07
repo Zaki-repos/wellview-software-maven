@@ -67,6 +67,13 @@ public class Home extends UI{
 		setupHomeButtonUI(addVisit_btn, 200, 200, "../images/addVisit.png");
 		setupHomeButtonUI(chat_btn, 200, 200, "../images/chat.png");
 		setupHomeButtonUI(pres_btn, 200, 200, "../images/prescription.png");
+		pres_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+            	Prescription newPres = new Prescription(border);
+            	border.setCenter(newPres.showPane());
+            }
+        });
 		setupHomeButtonUI(vital_btn, 200, 200, "../images/vitals.png");
 		setupHomeButtonUI(doc_btn, 200, 200, "../images/documents.png");
 		setupHomeButtonUI(help_btn, 200, 200, "../images/help.png");
@@ -119,8 +126,7 @@ public class Home extends UI{
 		vb.getChildren().add(gp);
 		VBox.setMargin(gp, new Insets(80, 120, 80, 120));
 		sp.setContent(vb);
-		//sp.setMaxHeight(WellViewMain.WINDOW_HEIGHT);
-		//sp.setMinWidth(WellViewMain.WINDOW_WIDTH);
+
 		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Horizontal scroll bar never appears
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Vertical scroll bar appears as needed
 
