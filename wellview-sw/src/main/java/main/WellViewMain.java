@@ -14,7 +14,6 @@ import com.google.firebase.cloud.FirestoreClient;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 public class WellViewMain extends Application {
 	
@@ -57,12 +56,9 @@ public class WellViewMain extends Application {
 		
 		BorderPane border = new BorderPane();
 		
-		Pane theRoot = new Pane();
+		Login lg = new Login(border);
 		
-		Login lg = new Login(border, theRoot);
-		
-		theRoot.getChildren().add(lg.showPane());
-		border.setCenter(theRoot);
+		border.setCenter(lg.showPane());
 		
 		Scene theScene = new Scene(border, WINDOW_WIDTH, WINDOW_HEIGHT);	// Create the scene
 		primaryStage.setScene(theScene);						  			// Set the scene on the stage

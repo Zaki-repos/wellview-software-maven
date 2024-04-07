@@ -37,7 +37,7 @@ public class Login extends UI{
 	/*
 	 * Login Constructor: Formats all the UI
 	 */
-	public Login(BorderPane border, Pane root) {
+	public Login(BorderPane border) {
 		
 		setupLabelUI(title_label, "Ariel", 25, WellViewMain.WINDOW_WIDTH, Pos.CENTER, 0, 80);
 		setupLabelUI(signIn_label, "Ariel", 18, WellViewMain.WINDOW_WIDTH, Pos.CENTER, 0, 150);
@@ -51,11 +51,9 @@ public class Login extends UI{
 		
 		click_btn.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override
-            public void handle(ActionEvent event) {     
-            	hidePane();
-            	root.getChildren().clear();
-            	SignUp newSignUp = new SignUp(border, root);
-            	root.getChildren().add(newSignUp.showPane());
+            public void handle(ActionEvent event) {
+            	SignUp newSignUp = new SignUp(border);
+            	border.setCenter(newSignUp.showPane());
             }
         });
 		
@@ -65,15 +63,11 @@ public class Login extends UI{
 				
 				if (verifyAccount()) {
 					hidePane();
-	            	root.getChildren().clear();
-					NavBar newNav = new NavBar();
-					//border.setTop(newNav.getNavBar());
+					NavBar newNav = new NavBar(border);
 					border.setTop(newNav.showPane());
 					
-	            	Home newHome = new Home(border, root);
-	            	//root.getChildren().add(newHome.showPane());
+	            	Home newHome = new Home(border);
 	            	border.setCenter(newHome.showPane());
-	            	newNav.disableMenu();
 	            	
 				} else {
 					Alert infoAlert = new Alert(Alert.AlertType.ERROR);
@@ -94,14 +88,13 @@ public class Login extends UI{
 		ImageView logoView = new ImageView(image);
 		setupImage(logoView, 300, 30, 100, 100);
 		
-		root.getChildren().add(logoView);
+		loginPane.getChildren().add(logoView);
 		
 	}
 	
 	public boolean verifyAccount() {
 		File temp = new File(username_label.getText() + "_PatientInfo.txt");
 		if (!temp.exists()) {
-			//errorMessage = "Incorrect Patient ID.";
 			return false;
 		}
 		else {

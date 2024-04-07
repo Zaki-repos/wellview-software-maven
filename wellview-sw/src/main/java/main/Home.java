@@ -1,5 +1,7 @@
 package main;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,10 +52,17 @@ public class Home extends UI{
 	VBox vb = new VBox();
 	ScrollPane sp = new ScrollPane();
 	
-	public Home(BorderPane border, Pane root) {
+	public Home(BorderPane border) {
 		
 		setupHomeButtonUI(acc_btn, 200, 200, "../images/account.png");
 		setupHomeButtonUI(pat_btn, 200, 200, "../images/patients.png");
+		pat_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+            	Patients newPat = new Patients(border);
+            	border.setCenter(newPat.showPane());
+            }
+        });
 		setupHomeButtonUI(visit_btn, 200, 200, "../images/visits.png");
 		setupHomeButtonUI(addVisit_btn, 200, 200, "../images/addVisit.png");
 		setupHomeButtonUI(chat_btn, 200, 200, "../images/chat.png");
@@ -131,8 +140,7 @@ public class Home extends UI{
 	 * hidePane: clears all UI components on the pane, returns the empty pane.
 	 */ 
 	public Pane hidePane() {
-		home.getChildren().clear();
-		return home;
+		return null;
 	}
 	
 	/*
