@@ -1,58 +1,71 @@
 package main;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextInputDialog;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Optional;
 
 public class Documents extends Application {
 
-    private TextArea documentTextArea;
+    private TextArea documentTextArea = new TextArea();
+    private TextField patientIdInput = new TextField();
+    private BorderPane borderPane = new BorderPane();
 
     @Override
     public void start(Stage primaryStage) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Patient ID");
-        dialog.setHeaderText("Enter Patient ID:");
-        dialog.setContentText("Patient ID:");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(patientID -> {
-            if (!patientID.trim().isEmpty()) {
-                initializeUI(primaryStage);
-                loadDocument(patientID.trim());
-            } else {
-                showAlert(AlertType.ERROR, "No Patient ID provided. Exiting application.");
-                System.exit(0); // or handle accordingly
-            }
-        });
-    }
-
-    private void initializeUI(Stage primaryStage) {
-        documentTextArea = new TextArea();
-        documentTextArea.setEditable(false);
-
-        StackPane root = new StackPane();
-        root.getChildren().add(documentTextArea);
-
-        Scene scene = new Scene(root, 400, 500);
-
+        borderPane.setTop(setupTopBar());
+        borderPane.setCenter(setupCenterArea());
+        
+        // Setup the scene and stage
+        Scene scene = new Scene(borderPane, 600, 400);
         primaryStage.setTitle("Document Viewer");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    private HBox setupTopBar() {
+        HBox topBar = new HBox(10);
+        topBar.setPadding(new Insets(15, 12, 15, 12));
+        topBar.setStyle("-fx-background-color: #336699;");
+        topBar.setAlignment(Pos.CENTER);
+
+        patientIdInput.setPromptText("Enter Patient ID");
+        patientIdInput.setMinWidth(300);
+        patientIdInput.setOnAction(e -> loadDocument(patientIdInput.getText().trim())); // Action on Enter key press
+
+        Button viewButton = new Button("View");
+        viewButton.setOnAction(e -> loadDocument(patientIdInput.getText().trim()));
+
+        topBar.getChildren().addAll(new Label("Patient ID:"), patientIdInput, viewButton);
+        return topBar;
+    }
+
+    private StackPane setupCenterArea() {
+        documentTextArea.setEditable(false);
+        StackPane centerArea = new StackPane();
+        centerArea.getChildren().add(documentTextArea);
+        return centerArea;
+    }
+
     private void loadDocument(String patientID) {
+        if (patientID.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "No Patient ID provided.");
+            return;
+        }
+
         File documentFile = new File(patientID + "_PatientInfo.txt");
 
         if (documentFile.exists() && !documentFile.isDirectory()) {
@@ -63,22 +76,23 @@ public class Documents extends Application {
                     contentBuilder.append(currentLine).append("\n");
                 }
             } catch (IOException e) {
-                showAlert(AlertType.ERROR, "Error reading the document.");
+                showAlert(Alert.AlertType.ERROR, "Error reading the document.");
                 e.printStackTrace();
             }
             documentTextArea.setText(contentBuilder.toString());
         } else {
-            showAlert(AlertType.INFORMATION, "No such file exists");
+            showAlert(Alert.AlertType.INFORMATION, "Document not found for Patient ID: " + patientID);
         }
     }
 
-    private void showAlert(AlertType alertType, String content) {
+    private void showAlert(Alert.AlertType alertType, String content) {
         Alert alert = new Alert(alertType);
+        alert.setHeaderText(null); // Removes the header
         alert.setContentText(content);
         alert.showAndWait();
     }
 
     public static void main(String[] args) {
-        launch(args);
+launch(args);
     }
 }
