@@ -14,9 +14,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
 public class Vitals extends UI {
 	
@@ -108,10 +105,6 @@ public class Vitals extends UI {
     	tempEntry.setPrefWidth(200);
     	tempEntry.setPrefHeight(20);
 
-
-
-
-    	
     	idBox.getChildren().addAll(patientPrompt, patientIdInput);
     	idBox.setAlignment(Pos.CENTER);
     	idBox.setSpacing(20);
