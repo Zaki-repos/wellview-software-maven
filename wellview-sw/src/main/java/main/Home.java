@@ -76,6 +76,13 @@ public class Home extends UI{
         });
 		setupHomeButtonUI(vital_btn, 200, 200, "../images/vitals.png");
 		setupHomeButtonUI(doc_btn, 200, 200, "../images/documents.png");
+		doc_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+            	Documents newDocs = new Documents(border);
+            	border.setCenter(newDocs.showPane());
+            }
+        });
 		setupHomeButtonUI(help_btn, 200, 200, "../images/help.png");
 		
 		setupTextFlowUIAdv(account, acc_btn, acc_label, 200);

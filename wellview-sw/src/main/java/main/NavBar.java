@@ -108,6 +108,14 @@ public class NavBar extends UI{
 		    	border.setCenter(newPres.showPane());
             }
         });
+		
+		documents_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Documents newDocs = new Documents(border);
+		    	border.setCenter(newDocs.showPane());
+            }
+        });
 
 	}
 	
