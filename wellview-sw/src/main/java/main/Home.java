@@ -105,6 +105,13 @@ public class Home extends UI{
             }
         });
 		setupHomeButtonUI(help_btn, 200, 200, "../images/help.png");
+		help_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Help newHelp = new Help(border);
+		    	border.setCenter(newHelp.showPane());
+            }
+        });
 		
 		setupTextFlowUIAdv(account, acc_btn, acc_label, 200);
 		setupTextFlowUIAdv(patients, pat_btn, pat_label, 200);
