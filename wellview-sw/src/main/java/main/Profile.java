@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class Profile extends UI {
+	
 	Pane profilePane = new Pane();
 	String password, userType, firstName, lastName, email, dob, sex;
 	TextField passwordTF = new TextField(), userTypeTF = new TextField(), firstNameTF = new TextField(), lastNameTF = new TextField(),
@@ -23,6 +24,7 @@ public class Profile extends UI {
 	Label passwordL = new Label("Password:"), userTypeL = new Label("User Type:"), firstNameL = new Label("First Name:"),
 			lastNameL = new Label("Last Name:"), emailL = new Label("Email:"), dobL = new Label("Date of Birth:"), sexL = new Label("Sex:");
 	Button saveBtn = new Button("Save");
+	
 	public Profile (BorderPane border) {
 		getDataFromFile(WellViewMain.currentUserUID);
 		passwordTF.setText(password);
