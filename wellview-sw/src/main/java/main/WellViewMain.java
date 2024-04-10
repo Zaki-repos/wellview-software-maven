@@ -3,7 +3,6 @@ package main;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
@@ -24,14 +23,10 @@ public class WellViewMain extends Application {
 	public static String currentUserType = "";
 	public static String currentPage = "";
 	
-	//TEMPORARY LIST OF USERS
-	public static ArrayList<User> userList = new ArrayList<User>();
-	
 	/*
 	 * start: entry point for javaFX program
 	 */ 
 	public void start(Stage primaryStage) {
-		
 		
 		try {
 			FileInputStream serviceAccount =
@@ -49,9 +44,7 @@ public class WellViewMain extends Application {
             // Now you can use `db` to interact with Firestore
         } catch (Exception e) {
             e.printStackTrace();
-        } 
-        
-		
+        }
 		
 		primaryStage.setTitle("WellView");
 		
