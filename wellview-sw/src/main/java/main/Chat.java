@@ -14,52 +14,77 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class Chat{
+public class Chat {
+
+    private static final double LEFT_BAR_WIDTH = 200;
+    private static final double MESSAGE_INPUT_WIDTH = 600;
+    private static final String BACKGROUND_COLOR = "#4A5568";
+    private static final String FONT_ARIAL = "Arial";
+    private static final int FONT_SIZE = 16;
 
     private ListView<String> chatList = new ListView<>();
     private TextArea chatContentArea = new TextArea();
     private TextField messageInputField = new TextField();
-    BorderPane borderPane = new BorderPane();
-
+    BorderPane mainLayout = new BorderPane();
+    
     public Chat(BorderPane border) {
 
-        borderPane.setPadding(new Insets(10));
+        mainLayout.setPadding(new Insets(10));
 
-        // Sidebar for chat history
-        VBox leftBar = setupLeftBar();
-        borderPane.setLeft(leftBar);
+        mainLayout.setLeft(createLeftBar());
+        mainLayout.setCenter(createChatViewArea());
 
-        // Main area for viewing and writing to selected chat
-        BorderPane chatViewArea = setupChatViewArea();
-        borderPane.setCenter(chatViewArea);
-
-        listChats();
+        populateChatList();
     }
 
-    private VBox setupLeftBar() {
+    private VBox createLeftBar() {
         VBox leftBar = new VBox(10);
         leftBar.setPadding(new Insets(10));
-        leftBar.setPrefWidth(200);
-        leftBar.setStyle("-fx-background-color: #4A5568;");
+        leftBar.setPrefWidth(LEFT_BAR_WIDTH);
+        leftBar.setStyle("-fx-background-color: " + BACKGROUND_COLOR + ";");
         leftBar.setAlignment(Pos.TOP_CENTER);
 
         Label chatsLabel = new Label("Chats");
-        chatsLabel.setFont(javafx.scene.text.Font.font("Arial", javafx.scene.text.FontWeight.BOLD, 16));
+        chatsLabel.setFont(javafx.scene.text.Font.font(FONT_ARIAL, javafx.scene.text.FontWeight.BOLD, FONT_SIZE));
         chatsLabel.setTextFill(Color.WHITE);
+
+        Button newChatButton = new Button("New Chat");
+        newChatButton.setOnAction(e -> createNewChat());
 
         chatList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         chatList.setOnMouseClicked(event -> {
             String selectedChat = chatList.getSelectionModel().getSelectedItem();
-            if (selectedChat != null && !selectedChat.isEmpty()) {
+            if (selectedChat != null) {
                 readChatContent(selectedChat);
             }
         });
 
-        leftBar.getChildren().addAll(chatsLabel, chatList);
+        leftBar.getChildren().addAll(chatsLabel, newChatButton, chatList);
         return leftBar;
     }
 
-    private BorderPane setupChatViewArea() {
+    private void createNewChat() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New Chat");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Enter chat name:");
+
+        dialog.showAndWait().ifPresent(name -> {
+            if (!name.trim().isEmpty()) {
+                File chatFile = new File(name.trim() + ".txt");
+                if (!chatFile.exists()) {
+                    try {
+                        chatFile.createNewFile();
+                        populateChatList(); // Refresh the chat list
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private BorderPane createChatViewArea() {
         BorderPane chatViewArea = new BorderPane();
         chatViewArea.setPadding(new Insets(10));
         
@@ -68,8 +93,8 @@ public class Chat{
         chatViewArea.setCenter(new ScrollPane(chatContentArea));
         
         HBox messageInputArea = new HBox(10);
-        messageInputArea.setPadding(new Insets(10, 0, 0, 0));
-        messageInputField.setPrefWidth(600);
+        messageInputArea.setPadding(new Insets(10));
+        messageInputField.setPrefWidth(MESSAGE_INPUT_WIDTH);
         Button sendMessageButton = new Button("Send");
         sendMessageButton.setOnAction(e -> sendMessage());
         messageInputArea.getChildren().addAll(messageInputField, sendMessageButton);
@@ -78,9 +103,9 @@ public class Chat{
         return chatViewArea;
     }
 
-    private void listChats() {
+    private void populateChatList() {
         File folder = new File(Paths.get("").toAbsolutePath().toString());
-        File[] listOfFiles = folder.listFiles((dir, name) -> name.startsWith("Chat_")); //use files ending in txt
+        File[] listOfFiles = folder.listFiles((dir, name) -> name.endsWith(".txt"));
 
         ObservableList<String> items = FXCollections.observableArrayList();
         if (listOfFiles != null) {
@@ -105,28 +130,27 @@ public class Chat{
         if (!message.isEmpty() && !chatList.getSelectionModel().isEmpty()) {
             String selectedChat = chatList.getSelectionModel().getSelectedItem();
             try {
-                Files.write(Paths.get(selectedChat), ("\n"+ WellViewMain.currentUserUID +": "+ message).getBytes(), StandardOpenOption.APPEND);
+                Files.write(Paths.get(selectedChat), ("\n" + message).getBytes(), StandardOpenOption.APPEND);
                 readChatContent(selectedChat); // Refresh chat content
-                messageInputField.clear(); // Clear input field
+                messageInputField.clear(); // Clear input field after sending message
             } catch (IOException e) {
                 chatContentArea.setText("Failed to send message to: " + selectedChat);
             }
         }
     }
     
-
 	/*
 	 * showPane: adds all the UI components to a pane and returns that pane.
 	 */ 
 	public BorderPane showPane() {
 		WellViewMain.currentPage = "Chat";
-		return borderPane;
+		return mainLayout;
 	}
 	
 	/*
 	 * getPane: returns the pane.
 	 */ 
 	public BorderPane getPane() {
-		return borderPane;
+		return mainLayout;
 	}
 }
