@@ -77,6 +77,12 @@ public class Profile extends UI {
 	public void getDataFromFile(String ID) {
 		try {
 			File file = new File(ID + "_PatientInfo.txt");
+			if (!file.exists()) {
+				file = new File(ID + "_DoctorInfo.txt");
+				if (!file.exists()) {
+					file = new File(ID + "_NurseInfo.txt");
+				}
+			}
 			FileReader fr = new FileReader(file);
 			Scanner scanner = new Scanner(fr);
 			password = scanner.nextLine();
