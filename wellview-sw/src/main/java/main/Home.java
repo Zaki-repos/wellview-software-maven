@@ -66,6 +66,13 @@ public class Home extends UI{
 		setupHomeButtonUI(visit_btn, 200, 200, "../images/visits.png");
 		setupHomeButtonUI(addVisit_btn, 200, 200, "../images/addVisit.png");
 		setupHomeButtonUI(chat_btn, 200, 200, "../images/chat.png");
+		chat_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Chat newChat = new Chat(border);
+		    	border.setCenter(newChat.showPane());
+            }
+        });
 		setupHomeButtonUI(pres_btn, 200, 200, "../images/prescription.png");
 		pres_btn.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override
@@ -75,6 +82,13 @@ public class Home extends UI{
             }
         });
 		setupHomeButtonUI(vital_btn, 200, 200, "../images/vitals.png");
+    	vital_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Vitals newVitals = new Vitals(border);
+		    	border.setCenter(newVitals.showPane());
+            }
+        });
 		setupHomeButtonUI(doc_btn, 200, 200, "../images/documents.png");
 		doc_btn.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override
