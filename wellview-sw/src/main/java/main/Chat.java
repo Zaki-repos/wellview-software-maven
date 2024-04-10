@@ -2,6 +2,7 @@ package main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -9,6 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -53,7 +55,12 @@ public class Chat {
 
         chatList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         chatList.setOnMouseClicked(event -> {
-            String selectedChat = chatList.getSelectionModel().getSelectedItem();
+            String selectedChat;
+            if (WellViewMain.currentUserType.equals("Patient")) {
+        		selectedChat = WellViewMain.currentUserUID + "--" + chatList.getSelectionModel().getSelectedItem() + "Chat.txt";
+        	}else {
+        		selectedChat = chatList.getSelectionModel().getSelectedItem() + "Chat.txt";
+        	}
             if (selectedChat != null) {
                 readChatContent(selectedChat);
             }
@@ -72,14 +79,36 @@ public class Chat {
      * - Spencer created (I know...).
      */
     private void createNewChat() {
-        TextInputDialog dialog = new TextInputDialog();
+        Dialog<String> dialog = new Dialog();
         dialog.setTitle("New Chat");
-        dialog.setHeaderText(null);
-        dialog.setContentText("Enter chat name:");
-
+        dialog.setHeaderText("Create a Subject and Recipient.");
+        TextField textField = new TextField();
+        textField.setPromptText("Subject");
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        ComboBox<String> newPatientIdInput = new ComboBox<String>(FXCollections.observableArrayList(getPatientIDs()));
+        newPatientIdInput.setValue("Recipient");
+        if (WellViewMain.currentUserType.equals("Patient")) {
+        	dialog.setHeaderText("Create a Subject");
+            dialogPane.setContent(new VBox(8, textField));
+        }else {
+            dialogPane.setContent(new VBox(8, textField, newPatientIdInput));        	
+        }
+        
+        dialog.setResultConverter((ButtonType button) ->{
+        	if (button == ButtonType.OK) {
+        		if (WellViewMain.currentUserType.equals("Patient")) {
+            		return WellViewMain.currentUserUID + "--" + textField.getText();
+        		}
+        		return newPatientIdInput.getValue() + "--" + textField.getText();
+        	}
+        	return null;
+        });
+        
         dialog.showAndWait().ifPresent(name -> {
             if (!name.trim().isEmpty()) {
-                File chatFile = new File(name.trim() + ".txt");
+            	System.out.println(name.trim());
+                File chatFile = new File(name.trim() + "Chat.txt");
                 if (!chatFile.exists()) {
                     try {
                         chatFile.createNewFile();
@@ -121,12 +150,21 @@ public class Chat {
      */
     private void populateChatList() {
         File folder = new File(Paths.get("").toAbsolutePath().toString());
-        File[] listOfFiles = folder.listFiles((dir, name) -> name.endsWith(".txt"));
+        File[] listOfFiles;
+        if (WellViewMain.currentUserType.equals("Patient")) {
+            listOfFiles = folder.listFiles((dir, name) -> name.endsWith("Chat.txt") && name.startsWith(WellViewMain.currentUserUID));
+        }else {
+            listOfFiles = folder.listFiles((dir, name) -> name.endsWith("Chat.txt"));	
+        }
 
         ObservableList<String> items = FXCollections.observableArrayList();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
-                items.add(file.getName());
+            	if (WellViewMain.currentUserType.equals("Patient")) {
+                    items.add(file.getName().substring(file.getName().indexOf("--") + 2, file.getName().indexOf("Chat.txt")));
+            	}else {
+                    items.add(file.getName().substring(0, file.getName().indexOf("Chat.txt")));	
+            	}
             }
         }
         chatList.setItems(items);
@@ -144,7 +182,12 @@ public class Chat {
     private void sendMessage() {
         String message = messageInputField.getText().trim();
         if (!message.isEmpty() && !chatList.getSelectionModel().isEmpty()) {
-            String selectedChat = chatList.getSelectionModel().getSelectedItem();
+        	String selectedChat;
+        	if (WellViewMain.currentUserType.equals("Patient")) {
+        		selectedChat = WellViewMain.currentUserUID + "--" + chatList.getSelectionModel().getSelectedItem() + "Chat.txt";
+        	}else {
+        		selectedChat = chatList.getSelectionModel().getSelectedItem() + "Chat.txt";
+        	}
             try {
                 Files.write(Paths.get(selectedChat), ("\n" + WellViewMain.currentUserUID + ": " 
                 										+ message).getBytes(), StandardOpenOption.APPEND);
@@ -169,5 +212,22 @@ public class Chat {
 	 */ 
 	public BorderPane getPane() {
 		return mainLayout;
+	}
+
+	public String[] getPatientIDs() {
+		File folder = new File(".");
+		File[] fileList = folder.listFiles(new FilenameFilter() {
+			public boolean accept(File folder, String name) {
+				return name.toLowerCase().endsWith("patientinfo.txt");
+			}
+		});
+		String[] IDs = new String[fileList.length];
+		for (int i = 0; i < fileList.length; i++){
+			String name = fileList[i].getName();
+			int cutoff = name.indexOf("_PatientInfo.txt");
+			name = name.substring(0, cutoff);
+			IDs[i] = name;
+		}
+		return IDs;
 	}
 }
