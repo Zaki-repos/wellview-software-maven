@@ -26,7 +26,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class DoctorVisit extends UI {
-    private ComboBox newPatientIdInput;
+	
+    private ComboBox<String> newPatientIdInput;
     private TextField newDateInput = new TextField();
     private TextArea newSummaryArea = new TextArea();
     
@@ -57,7 +58,7 @@ public class DoctorVisit extends UI {
         patientIdLabel.setFont(Font.font("Arial", 18));
         patientIdLabel.setTextFill(Color.WHITE);
         
-        newPatientIdInput = new ComboBox(FXCollections.observableArrayList(getPatientIDs()));
+        newPatientIdInput = new ComboBox<String>(FXCollections.observableArrayList(getPatientIDs()));
         
         HBox dateBox = new HBox(10);
         Label dateLabel = new Label("Date:");
