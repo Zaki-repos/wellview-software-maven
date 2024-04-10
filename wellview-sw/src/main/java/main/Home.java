@@ -82,6 +82,13 @@ public class Home extends UI{
             }
         });
 		setupHomeButtonUI(vital_btn, 200, 200, "../images/vitals.png");
+    	vital_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Vitals newVitals = new Vitals(border);
+		    	border.setCenter(newVitals.showPane());
+            }
+        });
 		setupHomeButtonUI(doc_btn, 200, 200, "../images/documents.png");
 		doc_btn.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override

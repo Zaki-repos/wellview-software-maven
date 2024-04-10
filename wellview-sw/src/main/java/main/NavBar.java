@@ -124,6 +124,14 @@ public class NavBar extends UI{
 		    	border.setCenter(newChat.showPane());
             }
         });
+		
+		vitals_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Vitals newVitals = new Vitals(border);
+		    	border.setCenter(newVitals.showPane());
+            }
+        });
 	}
 	
 }
