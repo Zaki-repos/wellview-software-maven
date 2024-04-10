@@ -65,6 +65,13 @@ public class Home extends UI{
         });
 		setupHomeButtonUI(visit_btn, 200, 200, "../images/visits.png");
 		setupHomeButtonUI(addVisit_btn, 200, 200, "../images/addVisit.png");
+		addVisit_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				DoctorVisit newDocVis = new DoctorVisit(border);
+		    	border.setCenter(newDocVis.showPane());
+            }
+        });
 		setupHomeButtonUI(chat_btn, 200, 200, "../images/chat.png");
 		chat_btn.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override

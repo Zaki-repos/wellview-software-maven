@@ -22,6 +22,7 @@ public class NavBar extends UI{
 	private Button patientList_menu = new Button("Patient List");
 	private Button visits_menu = new Button("Visits");
 	private Button chat_menu = new Button("Chat");
+	private Button add_visit_menu = new Button("Add Visit");
 	private Button prescribe_menu = new Button("Prescribe");
 	private Button vitals_menu = new Button("Vitals");
 	private Button documents_menu = new Button("Documents");
@@ -52,7 +53,7 @@ public class NavBar extends UI{
 		}
 		else if (WellViewMain.currentUserType.equals("Doctor")) {
 			toolbar.getItems().addAll(home_menu, patientList_menu, chat_menu, prescribe_menu
-					, documents_menu, help_menu, profile_menu);
+					, add_visit_menu, documents_menu, help_menu, profile_menu);
 		}
 		else if (WellViewMain.currentUserType.equals("Nurse")) {
 			
@@ -61,7 +62,7 @@ public class NavBar extends UI{
 			
 		} else {
 			toolbar.getItems().addAll(home_menu, patientList_menu, visits_menu, chat_menu, prescribe_menu
-					, vitals_menu, documents_menu, help_menu, profile_menu);
+					, add_visit_menu, vitals_menu, documents_menu, help_menu, profile_menu);
 		}
 		
 		
@@ -130,6 +131,14 @@ public class NavBar extends UI{
             public void handle(ActionEvent event) {
 				Vitals newVitals = new Vitals(border);
 		    	border.setCenter(newVitals.showPane());
+            }
+        });
+		
+		add_visit_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				DoctorVisit newDocVis = new DoctorVisit(border);
+		    	border.setCenter(newDocVis.showPane());
             }
         });
 	}
