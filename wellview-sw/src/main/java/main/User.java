@@ -3,7 +3,6 @@ package main;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class User {
 
@@ -17,13 +16,6 @@ public class User {
 	private String address;
 	private String phone;
 	private String email;
-	
-	private ArrayList<Document> healthRecords = new ArrayList<Document>();
-	private ArrayList<Visit> visits = new ArrayList<Visit>();
-	private ArrayList<Prescription> prescriptions = new ArrayList<Prescription>();
-	private ArrayList<Conversation> conversations = new ArrayList<Conversation>();
-	private ArrayList<Vitals> vitals = new ArrayList<Vitals>();
-	
 	
 	public User(String fn, String ln, String pw, String bd, String em, String sx) {
 		
@@ -111,45 +103,4 @@ public class User {
 	public void setEmail(String str) {
 		email = str;
 	}
-	
-	public ArrayList<Document> getDocuments() {
-		return healthRecords;
-	}
-	
-	public void addDocument(Document doc) {
-		healthRecords.add(doc);
-	}
-	
-	public ArrayList<Visit> getVisits() {
-		return visits;
-	}
-	
-	public void addVisit(Visit vis) {
-		visits.add(vis);
-	}
-	
-	public ArrayList<Conversation> getConversation() {
-		return conversations;
-	}
-	
-	public void newConversation(Conversation con) {
-		conversations.add(con);
-	}
-	
-	public ArrayList<Prescription> getPrescriptions() {
-		return prescriptions;
-	}
-	
-	public void addPrescription(Prescription pres) {
-		prescriptions.add(pres);
-	}
-	
-	public ArrayList<Vitals> getVitals() {
-		return vitals;
-	}
-	
-	public void addVitals(Vitals vit) {
-		vitals.add(vit);
-	}
-	
 }

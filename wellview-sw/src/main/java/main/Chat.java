@@ -63,6 +63,14 @@ public class Chat {
         return leftBar;
     }
 
+    /**
+     * TODO:
+     * - This is going to be a very tricky button to implement but if the user is a patient,
+     * - then they should only be able to message Doctor and Nurse accounts.
+     * - If the user is a Doctor or Nurse, then they should be able to message anyone.
+     * - Let's change this so that it doesn't prompt for chat name but a drop down menu like
+     * - Spencer created (I know...).
+     */
     private void createNewChat() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("New Chat");
@@ -103,6 +111,14 @@ public class Chat {
         return chatViewArea;
     }
 
+    /**
+     * TODO: 
+     * - The chat list should show only the currently logged in user's chat files.
+     * - My initial idea was that chat files are stored like uid_Chat_uid.txt or 
+     * - something like that and we scan for any matches where the current UID matches
+     * - a text file with that UID (a person in that conversation).
+     * - Feel free to do whatever makes sense, but don't forget it is a two way street.
+     */
     private void populateChatList() {
         File folder = new File(Paths.get("").toAbsolutePath().toString());
         File[] listOfFiles = folder.listFiles((dir, name) -> name.endsWith(".txt"));
@@ -130,7 +146,8 @@ public class Chat {
         if (!message.isEmpty() && !chatList.getSelectionModel().isEmpty()) {
             String selectedChat = chatList.getSelectionModel().getSelectedItem();
             try {
-                Files.write(Paths.get(selectedChat), ("\n" + message).getBytes(), StandardOpenOption.APPEND);
+                Files.write(Paths.get(selectedChat), ("\n" + WellViewMain.currentUserUID + ": " 
+                										+ message).getBytes(), StandardOpenOption.APPEND);
                 readChatContent(selectedChat); // Refresh chat content
                 messageInputField.clear(); // Clear input field after sending message
             } catch (IOException e) {

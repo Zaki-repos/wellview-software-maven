@@ -1,7 +1,7 @@
 --------------------------------------------
        HEART DISEASE TREATMENT PLAN
 --------------------------------------------
-Prescription for Patient ID: 001-AZ-2024
+Prescription for Patient ID: ZIlyas12
 
 Medications:
 

@@ -95,6 +95,12 @@ public class Login extends UI{
 	public boolean verifyAccount() {
 		File temp = new File(username_label.getText() + "_PatientInfo.txt");
 		if (!temp.exists()) {
+			temp = new File(username_label.getText() + "_NurseInfo.txt");
+		}
+		if (!temp.exists()) {
+			temp = new File(username_label.getText() + "_DoctorInfo.txt");
+		}
+		if (!temp.exists()) {
 			return false;
 		}
 		else {
@@ -108,6 +114,7 @@ public class Login extends UI{
 				}
 				WellViewMain.currentUserType = sc.nextLine();
 				WellViewMain.currentUserUID = username_label.getText();
+				System.out.println(WellViewMain.currentUserType);
 				sc.close();
 				
 			} catch (FileNotFoundException e) {

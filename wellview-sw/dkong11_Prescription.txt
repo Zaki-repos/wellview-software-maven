@@ -1,7 +1,7 @@
 ---------------------------------------------
         DIABETES MANAGEMENT PLAN
 ---------------------------------------------
-Patient ID: 002-BX-2024
+Patient ID: dkong11
 
 Medications:
 
