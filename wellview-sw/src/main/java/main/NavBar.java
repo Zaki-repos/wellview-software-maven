@@ -86,6 +86,14 @@ public class NavBar extends UI{
 	
 	private void setActionsOnButtons(BorderPane border) {
 		
+		profile_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+            	Profile newProf = new Profile(border);
+            	border.setCenter(newProf.showPane());
+            }
+        });
+		
 		home_menu.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override
             public void handle(ActionEvent event) {     
@@ -147,6 +155,14 @@ public class NavBar extends UI{
             public void handle(ActionEvent event) {
 				Help newHelp = new Help(border);
 		    	border.setCenter(newHelp.showPane());
+            }
+        });
+		
+		visits_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Visit newVisit = new Visit(border);
+		    	border.setCenter(newVisit.showPane());
             }
         });
 	}

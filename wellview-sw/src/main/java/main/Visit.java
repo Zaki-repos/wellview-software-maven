@@ -11,8 +11,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
 public class Visit extends UI {
+	
 	TextArea allVisits = new TextArea("");
 	Pane visitPane = new Pane();
+	
 	public Visit(BorderPane border) {
 		allVisits.setFont(Font.font("Arial", 18));
 		allVisits.setMinWidth(WellViewMain.WINDOW_WIDTH);
@@ -39,6 +41,7 @@ public class Visit extends UI {
 		}
 		allVisits.setText(records);
 	}
+	
 	public Pane showPane() {
 		WellViewMain.currentPage = "Visit";
 		visitPane.getChildren().addAll(allVisits);

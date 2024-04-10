@@ -55,6 +55,13 @@ public class Home extends UI{
 	public Home(BorderPane border) {
 		
 		setupHomeButtonUI(acc_btn, 200, 200, "../images/account.png");
+		acc_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+            	Profile newProf = new Profile(border);
+            	border.setCenter(newProf.showPane());
+            }
+        });
 		setupHomeButtonUI(pat_btn, 200, 200, "../images/patients.png");
 		pat_btn.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override
@@ -64,6 +71,13 @@ public class Home extends UI{
             }
         });
 		setupHomeButtonUI(visit_btn, 200, 200, "../images/visits.png");
+		visit_btn.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Visit newVisit = new Visit(border);
+		    	border.setCenter(newVisit.showPane());
+            }
+        });
 		setupHomeButtonUI(addVisit_btn, 200, 200, "../images/addVisit.png");
 		addVisit_btn.setOnAction(new EventHandler<ActionEvent>() {  
 			@Override
