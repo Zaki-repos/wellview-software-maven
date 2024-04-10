@@ -47,8 +47,7 @@ public class Vitals extends UI {
     private HBox bpBox = new HBox();
     private HBox tempBox = new HBox();
     
-    private Label titleLabel = new Label("Patient Entry Form");
-    
+    private Label titleLabel = new Label("Patient Entry Form");    
     
     //for the bottom
     //private Button backButton = new Button("Back");
@@ -71,10 +70,14 @@ public class Vitals extends UI {
         borderPane.setBottom(bottomArea);
     }
     
-    //thank you Yaman for providing the template for this
-    private VBox setupTopBar() {
+    private VBox setupTopBar() {	
     	VBox vb = new VBox(10);
     	vb.setPadding(new Insets(10));
+    	vb.setStyle("-fx-background-color: #336699;");
+    	
+    	titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 32));
+    	titleLabel.setTextFill(Color.WHITE);
+    	vb.setAlignment(Pos.CENTER);
     	
     	vb.getChildren().addAll(titleLabel);
     	return vb;
@@ -83,12 +86,50 @@ public class Vitals extends UI {
     private VBox setupCenterArea() {
     	VBox midBox = new VBox();
     	midBox.setPadding(new Insets(10));
+    	midBox.setSpacing(30);
+    	
+    	patientPrompt.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    	heightPrompt.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    	weightPrompt.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    	hrPrompt.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    	bpPrompt.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    	tempPrompt.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    	
+    	patientIdInput.setPrefWidth(200);
+    	patientIdInput.setPrefHeight(20);
+    	heightEntry.setPrefWidth(200);
+    	heightEntry.setPrefHeight(20);
+    	weightEntry.setPrefWidth(200);
+    	weightEntry.setPrefHeight(20);
+    	hrEntry.setPrefWidth(200);
+    	hrEntry.setPrefHeight(20);
+    	bpEntry.setPrefWidth(200);
+    	bpEntry.setPrefHeight(20);
+    	tempEntry.setPrefWidth(200);
+    	tempEntry.setPrefHeight(20);
+
+
+
+
+    	
     	idBox.getChildren().addAll(patientPrompt, patientIdInput);
+    	idBox.setAlignment(Pos.CENTER);
+    	idBox.setSpacing(20);
     	heightBox.getChildren().addAll(heightPrompt, heightEntry);
+    	heightBox.setAlignment(Pos.CENTER);
+    	heightBox.setSpacing(20);
     	weightBox.getChildren().addAll(weightPrompt, weightEntry);
+    	weightBox.setAlignment(Pos.CENTER);
+    	weightBox.setSpacing(20);
     	hrBox.getChildren().addAll(hrPrompt, hrEntry);
+    	hrBox.setAlignment(Pos.CENTER);
+    	hrBox.setSpacing(20);
     	bpBox.getChildren().addAll(bpPrompt, bpEntry);
+    	bpBox.setAlignment(Pos.CENTER);
+    	bpBox.setSpacing(20);
     	tempBox.getChildren().addAll(tempPrompt, tempEntry);
+    	tempBox.setAlignment(Pos.CENTER);
+    	tempBox.setSpacing(20);
     	
     	midBox.getChildren().addAll(idBox, heightBox, weightBox, hrBox, bpBox, tempBox);
     	return midBox;
@@ -98,6 +139,9 @@ public class Vitals extends UI {
     private HBox setupBottomArea()  {
     	HBox botBox = new HBox();
     	botBox.setPadding(new Insets(10));
+    	botBox.setAlignment(Pos.CENTER);
+    	saveButton.setStyle("-fx-font-size: 14pt; -fx-background-color: #29BB89; -fx-text-fill: white;");
+    	botBox.setStyle("-fx-background-color: #336699;");
     	botBox.getChildren().addAll(saveButton);
     	
     	
@@ -120,6 +164,11 @@ public class Vitals extends UI {
         String bp = bpEntry.getText().trim();
         String temp = tempEntry.getText().trim();
         
+        File IdChecker = new File(patientId + "_PatientInfo.txt");
+		if (!IdChecker.exists()) {
+			showError("This Patient Does Not Exist");
+			return;
+		}
         
         if (patientId.isEmpty() || height.isEmpty() || weight.isEmpty() || hr.isEmpty() || bp.isEmpty() || temp.isEmpty()) {
             showError("One of the Fields is empty. If it isn't measured, enter \"N/A\"");
@@ -145,7 +194,7 @@ public class Vitals extends UI {
         	output.newLine();
         	output.close();
         	
-        	showAlert("Success", "File: " + filename + " Created");
+        	showAlert("Success", "File: " + filename + " Created in " + System.getProperty("user.dir"));
         }
         catch(IOException e) {
         	showError("An Unexpected Error Occurred");
