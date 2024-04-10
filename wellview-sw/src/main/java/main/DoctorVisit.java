@@ -3,14 +3,17 @@ package main;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -23,8 +26,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class DoctorVisit extends UI {
-
-    private TextField newPatientIdInput = new TextField();
+    private ComboBox newPatientIdInput;
     private TextField newDateInput = new TextField();
     private TextArea newSummaryArea = new TextArea();
     
@@ -54,7 +56,8 @@ public class DoctorVisit extends UI {
         Label patientIdLabel = new Label("Patient ID:");
         patientIdLabel.setFont(Font.font("Arial", 18));
         patientIdLabel.setTextFill(Color.WHITE);
-        newPatientIdInput.setPromptText("Patient ID");
+        
+        newPatientIdInput = new ComboBox(FXCollections.observableArrayList(getPatientIDs()));
         
         HBox dateBox = new HBox(10);
         Label dateLabel = new Label("Date:");
@@ -80,7 +83,7 @@ public class DoctorVisit extends UI {
     }
 
     private void saveNewSummary() {
-        String patientId = newPatientIdInput.getText().trim();
+        String patientId = newPatientIdInput.getValue().toString().trim();
         String summaryDetails = newSummaryArea.getText().trim();
         String date = newDateInput.getText().trim();
         if (patientId.isEmpty() || summaryDetails.isEmpty() || date.isEmpty()) {
@@ -109,7 +112,7 @@ public class DoctorVisit extends UI {
         	String totalData = newData + "\n" + currentData;
         	fw.write(totalData);
         	fw.close();
-            newPatientIdInput.clear();
+            newPatientIdInput.setValue(null);
             newSummaryArea.clear();
             showAlert("Success", "Summary saved successfully for Patient ID: " + patientId);
         } catch (IOException ex) {
@@ -146,6 +149,22 @@ public class DoctorVisit extends UI {
 	 */ 
 	public Pane getPane() {
 		return doctorViewPane;
+	}
+	public String[] getPatientIDs() {
+		File folder = new File(".");
+		File[] fileList = folder.listFiles(new FilenameFilter() {
+			public boolean accept(File folder, String name) {
+				return name.toLowerCase().endsWith("patientinfo.txt");
+			}
+		});
+		String[] IDs = new String[fileList.length];
+		for (int i = 0; i < fileList.length; i++){
+			String name = fileList[i].getName();
+			int cutoff = name.indexOf("_PatientInfo.txt");
+			name = name.substring(0, cutoff);
+			IDs[i] = name;
+		}
+		return IDs;
 	}
 }
 
