@@ -130,7 +130,6 @@ public class SignUp extends UI{
                 	sx = rb.getText();
                 	User newUser = new User(fn, ln, pw, bd, email, sx);
                 	
-                	WellViewMain.userList.add(newUser);
                 	Login newLogin = new Login(border);
                 	border.setCenter(newLogin.showPane());
             	}
