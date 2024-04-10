@@ -90,6 +90,12 @@ public class DoctorVisit extends UI {
 
         File file = new File(patientId + "_VisitRecords.txt");
         try {
+        	if (file.createNewFile()) {
+        		System.out.println("Created new file");
+        	}
+        	else {
+        		System.out.println("File already exists");
+        	}
         	FileReader fr = new FileReader(file);
         	Scanner scnr = new Scanner(fr);
         	String currentData = "";
