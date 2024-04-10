@@ -142,16 +142,16 @@ public class Home extends UI{
 		textflows[7] = documents;
 		textflows[8] = help;
 		
-		if (WellViewMain.currentUserType.equals("Doctor") || WellViewMain.currentUserType.equals("Nurse"))
+		if (WellViewMain.currentUserType.equals("Doctor") || WellViewMain.currentUserType.equals("Nurse") || WellViewMain.currentUserType.equals("Master"))
 			textflows[1] = patients;
-		if (WellViewMain.currentUserType.equals("Patient"))
+		if (WellViewMain.currentUserType.equals("Patient") || WellViewMain.currentUserType.equals("Master"))
 			textflows[2] = visits;
-		if (WellViewMain.currentUserType.equals("Doctor"))
+		if (WellViewMain.currentUserType.equals("Doctor") || WellViewMain.currentUserType.equals("Master"))
 		{
 			textflows[4] = prescription;
 			textflows[6] = addVisit;
 		}
-		if (WellViewMain.currentUserType.equals("Nurse"))
+		if (WellViewMain.currentUserType.equals("Nurse") || WellViewMain.currentUserType.equals("Master"))
 			textflows[5] = vitals;
 		
 		int x = 0;
