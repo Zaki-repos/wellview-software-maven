@@ -141,6 +141,14 @@ public class NavBar extends UI{
 		    	border.setCenter(newDocVis.showPane());
             }
         });
+		
+		help_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Help newHelp = new Help(border);
+		    	border.setCenter(newHelp.showPane());
+            }
+        });
 	}
 	
 }

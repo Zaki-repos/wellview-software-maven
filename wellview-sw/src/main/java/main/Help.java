@@ -1,25 +1,20 @@
 package main;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-public class Help extends Application {
+public class Help{
 
-    @Override
-    public void start(Stage primaryStage) {
-        BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 600, 400, Color.WHITE);
+	BorderPane root = new BorderPane();
+	
+    public Help(BorderPane border) {
         
         VBox departmentsBox = new VBox(10);
         departmentsBox.setAlignment(Pos.CENTER);
@@ -53,10 +48,6 @@ public class Help extends Application {
         root.setTop(motivationalMessage);
         BorderPane.setAlignment(motivationalMessage, Pos.CENTER);
         BorderPane.setMargin(motivationalMessage, new Insets(12, 0, 12, 0));
-        
-        primaryStage.setTitle("WellView Hospital - Get Help");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     private void showContactInfo(String[] chair) {
@@ -74,8 +65,19 @@ public class Help extends Application {
         techSupportAlert.setContentText("Email: techsupport@wellviewhospital.com\nPhone: 123-456-7890\nOur technical team is here to assist you!");
         techSupportAlert.showAndWait();
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+    
+	/*
+	 * showPane: adds all the UI components to a pane and returns that pane.
+	 */ 
+	public BorderPane showPane() {
+		WellViewMain.currentPage = "Help";
+		return root;
+	}
+	
+	/*
+	 * getPane: returns the pane.
+	 */ 
+	public BorderPane getPane() {
+		return root;
+	}
 }
