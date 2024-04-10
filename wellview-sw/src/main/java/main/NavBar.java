@@ -28,6 +28,7 @@ public class NavBar extends UI{
 	private Button documents_menu = new Button("Documents");
 	private Button help_menu = new Button("Help");
 	private Button profile_menu = new Button("Profile");
+	private Button logout_menu = new Button("Logout");
 	
 	private ToolBar toolbar = new ToolBar();
 	
@@ -49,20 +50,20 @@ public class NavBar extends UI{
 		if (WellViewMain.currentUserType.equals("Patient")) {
 			
 			toolbar.getItems().addAll(home_menu, visits_menu, chat_menu
-					, documents_menu, help_menu, profile_menu);
+					, documents_menu, help_menu, profile_menu, logout_menu);
 		}
 		else if (WellViewMain.currentUserType.equals("Doctor")) {
 			toolbar.getItems().addAll(home_menu, patientList_menu, chat_menu, prescribe_menu
-					, add_visit_menu, documents_menu, help_menu, profile_menu);
+					, add_visit_menu, documents_menu, help_menu, profile_menu, logout_menu);
 		}
 		else if (WellViewMain.currentUserType.equals("Nurse")) {
 			
 			toolbar.getItems().addAll(home_menu, patientList_menu, chat_menu
-					, vitals_menu, documents_menu, help_menu, profile_menu);
+					, vitals_menu, documents_menu, help_menu, profile_menu, logout_menu);
 			
 		} else {
 			toolbar.getItems().addAll(home_menu, patientList_menu, visits_menu, chat_menu, prescribe_menu
-					, add_visit_menu, vitals_menu, documents_menu, help_menu, profile_menu);
+					, add_visit_menu, vitals_menu, documents_menu, help_menu, profile_menu, logout_menu);
 		}
 		
 		
@@ -163,6 +164,17 @@ public class NavBar extends UI{
             public void handle(ActionEvent event) {
 				Visit newVisit = new Visit(border);
 		    	border.setCenter(newVisit.showPane());
+            }
+        });
+		
+		logout_menu.setOnAction(new EventHandler<ActionEvent>() {  
+			@Override
+            public void handle(ActionEvent event) {
+				Login lg = new Login(border);
+				WellViewMain.currentUserType = "";
+				WellViewMain.currentUserUID = "";
+				border.setTop(null);
+				border.setCenter(lg.showPane());
             }
         });
 	}
