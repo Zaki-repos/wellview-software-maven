@@ -14,14 +14,14 @@ import javafx.scene.text.Font;
 public class Visit extends UI {
 	TextArea allVisits = new TextArea("");
 	Pane visitPane = new Pane();
-	public Visit(BorderPane border, String ID) {
+	public Visit(BorderPane border) {
 		allVisits.setFont(Font.font("Arial", 18));
 		allVisits.setMinWidth(WellViewMain.WINDOW_WIDTH);
 		allVisits.setLayoutX(0);
 		allVisits.setLayoutY(0);		
 		allVisits.setEditable(false);
 		allVisits.setMinHeight(WellViewMain.WINDOW_HEIGHT);
-		File visitFile = new File(ID + "_VisitRecords.txt");
+		File visitFile = new File(WellViewMain.currentUserUID + "_VisitRecords.txt");
 		String records = "No visits to display.";
 		if (visitFile.exists()) {
 			try {

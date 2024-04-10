@@ -23,8 +23,8 @@ public class Profile extends UI {
 	Label passwordL = new Label("Password:"), userTypeL = new Label("User Type:"), firstNameL = new Label("First Name:"),
 			lastNameL = new Label("Last Name:"), emailL = new Label("Email:"), dobL = new Label("Date of Birth:"), sexL = new Label("Sex:");
 	Button saveBtn = new Button("Save");
-	public Profile (BorderPane border, String ID) {
-		getDataFromFile(ID);
+	public Profile (BorderPane border) {
+		getDataFromFile(WellViewMain.currentUserUID);
 		passwordTF.setText(password);
 		userTypeTF.setText(userType);
 		firstNameTF.setText(firstName);
@@ -67,7 +67,7 @@ public class Profile extends UI {
 		
 		saveBtn.setOnAction(new EventHandler<>() {  //if the Save button was pressed, save the data into the file, overwriting it if necessary.
             public void handle(ActionEvent event){ 
-            	saveDataIntoFile(ID);
+            	saveDataIntoFile(WellViewMain.currentUserUID);
             }
 		});
 		
