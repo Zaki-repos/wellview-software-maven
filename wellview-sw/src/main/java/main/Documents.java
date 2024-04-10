@@ -20,26 +20,20 @@ import java.util.List;
 // Hypothetical UserSession class to simulate fetching the current user's UID
 // Replace this with your actual UserSession import
 
-public class Documents extends Application {
+public class Documents {
 
     private TextArea documentTextArea = new TextArea();
     private ListView<String> documentListView = new ListView<>();
     private BorderPane borderPane = new BorderPane();
     private String userUID; // This will be fetched from the UserSession class
 
-    @Override
-    public void start(Stage primaryStage) {
+    
+    public Documents(BorderPane pane) {
         // Fetch the UID from UserSession or similar class
         userUID = WellViewMain.currentUserUID; // Adjust this call to your actual method for fetching the UID
     	
         borderPane.setLeft(setupDocumentList());
         borderPane.setCenter(documentTextArea);
-
-        // Setup the scene and stage
-        Scene scene = new Scene(borderPane, 800, 400);
-        primaryStage.setTitle("Document Viewer");
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
         loadDocumentList();
     }
@@ -104,7 +98,18 @@ public class Documents extends Application {
         alert.showAndWait();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	/*
+	 * showPane: adds all the UI components to a pane and returns that pane.
+	 */ 
+	public BorderPane showPane() {
+		WellViewMain.currentPage = "Documents";
+		return borderPane;
+	}
+	
+	/*
+	 * getPane: returns the pane.
+	 */ 
+	public BorderPane getPane() {
+		return borderPane;
+	}
 }
