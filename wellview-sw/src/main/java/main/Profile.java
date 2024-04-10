@@ -16,9 +16,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class Profile extends UI {
-	Pane profilePane;
+	Pane profilePane = new Pane();
 	String password, userType, firstName, lastName, email, dob, sex;
-	TextField passwordTF, userTypeTF, firstNameTF, lastNameTF, emailTF, dobTF, sexTF;
+	TextField passwordTF = new TextField(), userTypeTF = new TextField(), firstNameTF = new TextField(), lastNameTF = new TextField(),
+			emailTF = new TextField(), dobTF = new TextField(), sexTF = new TextField();
 	Label passwordL = new Label("Password:"), userTypeL = new Label("User Type:"), firstNameL = new Label("First Name:"),
 			lastNameL = new Label("Last Name:"), emailL = new Label("Email:"), dobL = new Label("Date of Birth:"), sexL = new Label("Sex:");
 	Button saveBtn = new Button("Save");
@@ -32,34 +33,34 @@ public class Profile extends UI {
 		dobTF.setText(dob);
 		sexTF.setText(sex);		
 		
-		double xPosition = 100, width = 100, xOffset = 1.25 * width;
-		double currentYPosition = 100, ySpacing = 150;
+		double xPosition = 100, width = 100, xOffset = 1.5 * width;
+		double currentYPosition = 50, ySpacing = 60;
 		
-		setupLabelUI(passwordL, "Arial", 25, width, Pos.CENTER, xPosition, currentYPosition);
+		setupLabelUI(passwordL, "Arial", 25, width, Pos.CENTER_RIGHT, xPosition, currentYPosition);
 		setupTextFieldUI(passwordTF, "Arial", 18, 2*width, Pos.CENTER, xPosition + xOffset, currentYPosition, true);
 		currentYPosition += ySpacing;
 		
-		setupLabelUI(userTypeL, "Arial", 25, width, Pos.CENTER, xPosition, currentYPosition);
-		setupTextFieldUI(userTypeTF, "Arial", 18, 2*width, Pos.CENTER, xPosition + xOffset, currentYPosition, true);
+		setupLabelUI(userTypeL, "Arial", 25, width, Pos.CENTER_RIGHT, xPosition, currentYPosition);
+		setupTextFieldUI(userTypeTF, "Arial", 18, 2*width, Pos.CENTER, xPosition + xOffset, currentYPosition, false);
 		currentYPosition += ySpacing;
 		
-		setupLabelUI(firstNameL, "Arial", 25, width, Pos.CENTER, xPosition, currentYPosition);
+		setupLabelUI(firstNameL, "Arial", 25, width, Pos.CENTER_RIGHT, xPosition, currentYPosition);
 		setupTextFieldUI(firstNameTF, "Arial", 18, 2*width, Pos.CENTER, xPosition + xOffset, currentYPosition, true);
 		currentYPosition += ySpacing;
 
-		setupLabelUI(lastNameL, "Arial", 25, width, Pos.CENTER, xPosition, currentYPosition);
+		setupLabelUI(lastNameL, "Arial", 25, width, Pos.CENTER_RIGHT, xPosition, currentYPosition);
 		setupTextFieldUI(lastNameTF, "Arial", 18, 2*width, Pos.CENTER, xPosition + xOffset, currentYPosition, true);
 		currentYPosition += ySpacing;
 
-		setupLabelUI(emailL, "Arial", 25, width, Pos.CENTER, xPosition, currentYPosition);
+		setupLabelUI(emailL, "Arial", 25, width, Pos.CENTER_RIGHT, xPosition, currentYPosition);
 		setupTextFieldUI(emailTF, "Arial", 18, 2*width, Pos.CENTER, xPosition + xOffset, currentYPosition, true);
 		currentYPosition += ySpacing;
 
-		setupLabelUI(dobL, "Arial", 25, width, Pos.CENTER, xPosition, currentYPosition);
+		setupLabelUI(dobL, "Arial", 25, width, Pos.CENTER_RIGHT, xPosition, currentYPosition);
 		setupTextFieldUI(dobTF, "Arial", 18, 2*width, Pos.CENTER, xPosition + xOffset, currentYPosition, true);
 		currentYPosition += ySpacing;
 
-		setupLabelUI(sexL, "Arial", 25, width, Pos.CENTER, xPosition, currentYPosition);
+		setupLabelUI(sexL, "Arial", 25, width, Pos.CENTER_RIGHT, xPosition, currentYPosition);
 		setupTextFieldUI(sexTF, "Arial", 18, 2*width, Pos.CENTER, xPosition + xOffset, currentYPosition, true);
 		setupButtonUI(saveBtn, "Arial", 18, 100, Pos.CENTER, xPosition + xOffset * 3, currentYPosition);
 		currentYPosition += ySpacing;
@@ -99,10 +100,14 @@ public class Profile extends UI {
 		dob = dobTF.getText();
 		sex = sexTF.getText();
 		String data = password + '\n' + userType + '\n' + firstName + '\n' + lastName + '\n' + email + '\n' + dob + '\n' + sex;
+		System.out.println(data);
 		try {
+			File fileOld = new File(ID + "_PatientInfo.txt");
+			fileOld.delete();
 			File file = new File(ID + "_PatientInfo.txt");
 			FileWriter fw = new FileWriter(file);
 			fw.write(data);
+			fw.close();
 		} catch (IOException exception) { //Catches any errors that could possibly occur.
     		System.out.println("An error occurred while trying to save.");
     		exception.printStackTrace();
