@@ -20,6 +20,7 @@ public class WellViewMain extends Application {
 	public final static double WINDOW_WIDTH = 900;
 	public final static double WINDOW_HEIGHT = 600;
 	
+	public static String currentUserUID = "";
 	public static String currentUserType = "";
 	public static String currentPage = "";
 	

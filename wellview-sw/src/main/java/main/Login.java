@@ -107,6 +107,7 @@ public class Login extends UI{
 					return false;
 				}
 				WellViewMain.currentUserType = sc.nextLine();
+				WellViewMain.currentUserUID = username_label.getText();
 				sc.close();
 				
 			} catch (FileNotFoundException e) {
