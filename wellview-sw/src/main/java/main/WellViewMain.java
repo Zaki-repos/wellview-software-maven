@@ -28,24 +28,6 @@ public class WellViewMain extends Application {
 	 */ 
 	public void start(Stage primaryStage) {
 		
-		try {
-			FileInputStream serviceAccount =
-					new FileInputStream("./serviceAccountKey.json");
-
-					FirebaseOptions options = FirebaseOptions.builder()
-					  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-					  .build();
-
-					FirebaseApp.initializeApp(options);
-
-            Firestore db = FirestoreClient.getFirestore();
-            System.out.println(db);
-
-            // Now you can use `db` to interact with Firestore
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-		
 		primaryStage.setTitle("WellView");
 		
 		BorderPane border = new BorderPane();
